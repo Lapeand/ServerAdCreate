@@ -1,27 +1,51 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db/ads.db.sequelize');
+const { sequelize } = require('../db/ads.db.sequelize');
 
 
-const Ad = sequelize.define("Ad",{
+const Ads = sequelize.define("Ads",{
   id:{
-
+    type: DataTypes.INTEGER, 
+    autoIncrement: true,
+    primaryKey: true
   },
-  titleAd:{
 
+  title:{
+    type: DataTypes.STRING(255), 
+    allowNull: false,
+    validate: { notEmpty: true }
   },
-  categoryAd:{
 
+  category:{
+    type: DataTypes.ENUM('channel-sale', 'promotion', 'design', 'seo', 'other'), 
+    allowNull: false,
+    validate: { notEmpty: true }
   },
-  descriptionAd:{
 
+  description:{
+    type: DataTypes.TEXT, 
+    allowNull: false,
+    validate: { notEmpty: true }
   },
-  priceAd:{
 
+  price:{
+    type: DataTypes.DECIMAL(10, 2), 
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      min: 0
+    }
   },
-  imagesAd:{
 
+  images:{
+    type: DataTypes.JSON, 
+    allowNull: true
   },
-  contactAd:{
-    
+
+  contact:{
+    type: DataTypes.TEXT, 
+    allowNull: true,
+    validate: { notEmpty: true }
   }
 })
+
+module.exports = Ads;
